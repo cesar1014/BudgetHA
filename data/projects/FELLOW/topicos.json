@@ -1,0 +1,233 @@
+[
+  {
+    "id": "medical-resident-grant",
+    "nome": "Medical resident grant",
+    "grupo": "PERSONNEL",
+    "templateSheet": "Expenditures",
+    "templateRow": 15,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 1,
+    "orcamentoProgramaBRL": 768000
+  },
+  {
+    "id": "nursing-resident-grant",
+    "nome": "Nursing resident grant",
+    "grupo": "PERSONNEL",
+    "templateSheet": "Expenditures",
+    "templateRow": 16,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 2,
+    "orcamentoProgramaBRL": 360000
+  },
+  {
+    "id": "administrative-assistant-salary",
+    "nome": "Administrative assistant salary",
+    "grupo": "PERSONNEL",
+    "templateSheet": "Expenditures",
+    "templateRow": 17,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 3,
+    "orcamentoProgramaBRL": 39746
+  },
+  {
+    "id": "project-coordinator-salary",
+    "nome": "Project coordinator salary",
+    "grupo": "PERSONNEL",
+    "templateSheet": "Expenditures",
+    "templateRow": 18,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 4,
+    "orcamentoProgramaBRL": 96000
+  },
+  {
+    "id": "audiovisual-salary",
+    "nome": "Audiovisual salary",
+    "grupo": "PERSONNEL",
+    "templateSheet": "Expenditures",
+    "templateRow": 19,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 5,
+    "orcamentoProgramaBRL": 71579
+  },
+  {
+    "id": "nurse-salary",
+    "nome": "Nurse salary",
+    "grupo": "PERSONNEL",
+    "templateSheet": "Expenditures",
+    "templateRow": 20,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 6,
+    "orcamentoProgramaBRL": 89661
+  },
+  {
+    "id": "operational-fees-pg-lato-sensu-coreme",
+    "nome": "Operational fees (PG Lato Sensu/COREME)",
+    "grupo": "DIRECT COSTS",
+    "templateSheet": "Expenditures",
+    "templateRow": 22,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 7,
+    "orcamentoProgramaBRL": 20000
+  },
+  {
+    "id": "infrastructure-and-equipement",
+    "nome": "Infrastructure and equipement",
+    "grupo": "DIRECT COSTS",
+    "templateSheet": "Expenditures",
+    "templateRow": 23,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 8,
+    "orcamentoProgramaBRL": 324054
+  },
+  {
+    "id": "transportation-operational-reserve-external-internships",
+    "nome": "Transportation/operational reserve - External internships",
+    "grupo": "DIRECT COSTS",
+    "templateSheet": "Expenditures",
+    "templateRow": 24,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 9,
+    "orcamentoProgramaBRL": 200000
+  },
+  {
+    "id": "advertising-fees-marketing-press",
+    "nome": "Advertising fees (Marketing/press)",
+    "grupo": "DIRECT COSTS",
+    "templateSheet": "Expenditures",
+    "templateRow": 25,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 10,
+    "orcamentoProgramaBRL": 75000
+  },
+  {
+    "id": "scientific-and-cultural-events-fee-harena",
+    "nome": "Scientific and cultural events fee (Harena)",
+    "grupo": "DIRECT COSTS",
+    "templateSheet": "Expenditures",
+    "templateRow": 26,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 11,
+    "orcamentoProgramaBRL": 100000
+  },
+  {
+    "id": "resident-support-fee",
+    "nome": "Resident support fee",
+    "grupo": "DIRECT COSTS",
+    "templateSheet": "Expenditures",
+    "templateRow": 27,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 12,
+    "orcamentoProgramaBRL": 250000
+  },
+  {
+    "id": "computers-desktop-with-webcam-microphone-and-telemedicine-software",
+    "nome": "Computers (Desktop with webcam, microphone and telemedicine software)",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 15,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 13,
+    "orcamentoProgramaBRL": 50000
+  },
+  {
+    "id": "tablets-portable-devices-with-internet-access",
+    "nome": "Tablets (Portable devices with internet access)",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 16,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 14,
+    "orcamentoProgramaBRL": 30000
+  },
+  {
+    "id": "mobile-internet-starlink-satellite-connection-kits-for-mobile-units-and-remote-a",
+    "nome": "Mobile Internet (Starlink) - Satellite connection kits for mobile units and remote areas",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 17,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 15,
+    "orcamentoProgramaBRL": 40000
+  },
+  {
+    "id": "integrated-electronic-medical-record-system-with-telemedicine-and-telemonitoring",
+    "nome": "Integrated Electronic Medical Record - System with telemedicine and telemonitoring features",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 18,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 16,
+    "orcamentoProgramaBRL": 50000
+  },
+  {
+    "id": "scheduling-and-reminder-software-platform-for-online-scheduling-and-sending-auto",
+    "nome": "Scheduling and Reminder Software - Platform for online scheduling and sending automated reminders",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 19,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 17,
+    "orcamentoProgramaBRL": 10000
+  },
+  {
+    "id": "telemonitoring-devices-oximeters-blood-pressure-monitors-with-data-transmission-",
+    "nome": "Telemonitoring Devices - Oximeters. Blood pressure monitors with data transmission capability",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 20,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 18,
+    "orcamentoProgramaBRL": 25000
+  },
+  {
+    "id": "team-training-courses-and-workshops-on-digital-health-telemedicine-and-intercult",
+    "nome": "Team Training - Courses and workshops on digital health, telemedicine and intercultural communication",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 21,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 19,
+    "orcamentoProgramaBRL": 20000
+  },
+  {
+    "id": "digital-education-materials-brochures-tutorial-videos-and-other-resources-for-pa",
+    "nome": "Digital Education Materials - Brochures, tutorial videos and other resources for patients and communities",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 22,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 20,
+    "orcamentoProgramaBRL": 10000
+  },
+  {
+    "id": "technical-support-and-maintenance",
+    "nome": "Technical Support and Maintenance",
+    "grupo": "INFRASTRUCTURE AND EQUIPMENT",
+    "templateSheet": "Equipment",
+    "templateRow": 23,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 21,
+    "orcamentoProgramaBRL": 30000
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "ef9f8f4a-cdba-4829-9bc3-059b525e7464",
+    "topico_id": "computer",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 18250.75,
+    "semestre": "S2",
+    "ano": 2025,
+    "criado_em": "2026-02-16T20:09:17.485+00:00",
+    "atualizado_em": "2026-02-16T20:09:17.485+00:00"
+  },
+  {
+    "id": "8a56ffc0-965d-4444-974c-37a6c0cc906a",
+    "topico_id": "didactic-material",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 5774.18,
+    "semestre": "S2",
+    "ano": 2025,
+    "criado_em": "2026-02-16T20:09:17.485+00:00",
+    "atualizado_em": "2026-02-16T20:09:17.485+00:00"
+  },
+  {
+    "id": "5926ce58-128a-41a4-bffd-9e084662a93e",
+    "topico_id": "technical-equipment-infrastructure",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 8444,
+    "semestre": "S2",
+    "ano": 2025,
+    "criado_em": "2026-02-16T20:09:17.485+00:00",
+    "atualizado_em": "2026-02-16T20:09:17.485+00:00"
+  },
+  {
+    "id": "63f912a3-47ff-4cea-8e54-744cc6e39842",
+    "topico_id": "team-transportation-meals",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 1612.43,
+    "semestre": "S2",
+    "ano": 2025,
+    "criado_em": "2026-02-16T20:09:17.485+00:00",
+    "atualizado_em": "2026-02-16T20:09:17.485+00:00"
+  },
+  {
+    "id": "bc6b9609-a62e-4236-a058-bbeef698fb96",
+    "topico_id": "just-mine",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 150000,
+    "semestre": "S2",
+    "ano": 2025,
+    "criado_em": "2026-02-16T20:09:17.485+00:00",
+    "atualizado_em": "2026-02-16T20:09:17.485+00:00"
+  }
+]

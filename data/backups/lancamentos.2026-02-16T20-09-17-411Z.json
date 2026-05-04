@@ -1,0 +1,67 @@
+[
+  {
+    "id": "5763a062-2289-4ee4-b3a4-5cfa60d366e5",
+    "topicoId": "computer",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 18250.75,
+    "semestre": "S2",
+    "ano": 2025,
+    "criadoEm": "2026-02-16T20:08:55.943Z",
+    "atualizadoEm": "2026-02-16T20:08:55.943Z"
+  },
+  {
+    "id": "306b9361-768d-4b49-8bc2-931f2f996c15",
+    "topicoId": "didactic-material",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 5774.18,
+    "semestre": "S2",
+    "ano": 2025,
+    "criadoEm": "2026-02-16T20:08:55.943Z",
+    "atualizadoEm": "2026-02-16T20:08:55.943Z"
+  },
+  {
+    "id": "39a8077e-dd38-442d-8593-5fb9752b4c6f",
+    "topicoId": "technical-equipment-infrastructure",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 8444,
+    "semestre": "S2",
+    "ano": 2025,
+    "criadoEm": "2026-02-16T20:08:55.943Z",
+    "atualizadoEm": "2026-02-16T20:08:55.943Z"
+  },
+  {
+    "id": "5287bb39-c40f-46b8-b547-bdabaa57974f",
+    "topicoId": "team-transportation-meals",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 1612.43,
+    "semestre": "S2",
+    "ano": 2025,
+    "criadoEm": "2026-02-16T20:08:55.943Z",
+    "atualizadoEm": "2026-02-16T20:08:55.943Z"
+  },
+  {
+    "id": "5369f94f-3b62-49ef-98c3-7e1f1d862e07",
+    "topicoId": "just-mine",
+    "data": "2025-12-31",
+    "descricao": "Gasto do periodo importado da planilha final",
+    "fornecedor": "IMPORT_PLANILHA_FINAL",
+    "responsavel": "IMPORT_PLANILHA_FINAL",
+    "valor": 150000,
+    "semestre": "S2",
+    "ano": 2025,
+    "criadoEm": "2026-02-16T20:08:55.943Z",
+    "atualizadoEm": "2026-02-16T20:08:55.943Z"
+  }
+]

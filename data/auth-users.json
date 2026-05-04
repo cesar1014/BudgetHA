@@ -1,0 +1,75 @@
+[
+  {
+    "id": "peocon",
+    "username": "PEOCON",
+    "passwordHash": "pbkdf2$sha256$310000$aj-DQBnYjSzmvAUZ1-Tf6Q$qbpWQxHB01c6L8aWQAdaLz6TxDnaX3ino7bSulabNns",
+    "role": "admin",
+    "isActive": true,
+    "isSuperAdmin": false,
+    "accountType": "user",
+    "allowedProjects": [
+      "PEOCON"
+    ],
+    "rolesByProject": {},
+    "defaultProjectCode": "PEOCON",
+    "createdAt": "2026-02-23T11:03:43.984Z",
+    "updatedAt": "2026-03-12T14:43:59.088Z",
+    "lastPasswordResetAt": null
+  },
+  {
+    "id": "fellow",
+    "username": "FELLOW",
+    "passwordHash": "pbkdf2$sha256$310000$F2ZzCXrRH5jb3co6I5OQ-w$ptsE7xegTeIve18xHZscne1lNosH7i43T3HRNx0FLO8",
+    "role": "admin",
+    "isActive": true,
+    "isSuperAdmin": false,
+    "accountType": "user",
+    "allowedProjects": [
+      "PEOCON",
+      "FELLOW"
+    ],
+    "rolesByProject": {},
+    "defaultProjectCode": "FELLOW",
+    "createdAt": "2026-02-23T11:03:43.984Z",
+    "updatedAt": "2026-03-12T14:43:59.088Z",
+    "lastPasswordResetAt": null
+  },
+  {
+    "id": "cesar1014",
+    "username": "Cesar1014",
+    "passwordHash": "pbkdf2$sha256$310000$pizWvom7Yyb2NR5nW4RkuA$1JNgcu0SclzznHJ1s4gh8SovJbW1wTJ_ruuPH4Cb3b0",
+    "role": "admin",
+    "isActive": true,
+    "isSuperAdmin": true,
+    "accountType": "user",
+    "allowedProjects": [
+      "PEOCON",
+      "FELLOW"
+    ],
+    "rolesByProject": {
+      "PEOCON": "admin",
+      "FELLOW": "admin"
+    },
+    "defaultProjectCode": "PEOCON",
+    "createdAt": "2026-02-23T11:03:43.984Z",
+    "updatedAt": "2026-03-12T14:43:59.088Z",
+    "lastPasswordResetAt": null
+  },
+  {
+    "id": "tmp-switch-case",
+    "username": "tmp_switch_case",
+    "passwordHash": "pbkdf2$sha256$310000$RadvkDV3EG3aY9pWsLDs6g$6Qf3bgEpM_FE7x1-FcVnmsqo1ObruJMzBZSFex6gsMQ",
+    "role": "admin",
+    "isActive": false,
+    "isSuperAdmin": false,
+    "accountType": "user",
+    "allowedProjects": [
+      "PEOCON"
+    ],
+    "rolesByProject": {},
+    "defaultProjectCode": "PEOCON",
+    "createdAt": "2026-02-23T11:03:43.984Z",
+    "updatedAt": "2026-03-12T14:43:59.088Z",
+    "lastPasswordResetAt": null
+  }
+]

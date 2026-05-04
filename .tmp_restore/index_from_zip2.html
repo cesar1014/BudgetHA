@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão Orçamentária | Fundação Pio XII</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">
+            <img src="./peocon-mark.svg" alt="Logo PEOCON" />
+          </div>
+          <div class="brand-info">
+            <h1 id="brand-project-code">PEOCON</h1>
+            <p id="brand-project-name">Fundação Pio XII</p>
+          </div>
+        </div>
+
+        <nav class="nav-menu sidebar-nav" aria-label="Menu principal">
+          <button class="nav-item nav-link active" data-view="resumo" type="button" aria-current="page">Resumo</button>
+          <button class="nav-item nav-link" data-view="topicos" type="button">Tópicos</button>
+          <button class="nav-item nav-link" data-view="relatorios" type="button">Relatórios</button>
+          <button class="nav-item nav-link" data-view="config" type="button">Configurações</button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button type="button" id="toggle-team-hires" class="lock-toggle toggle-btn locked" aria-pressed="false">
+            <span class="lock-left">
+              <span id="team-hires-dot" class="lock-dot"></span>
+              <span id="team-hires-text">Travado</span>
+            </span>
+            <span class="lock-tag">RH</span>
+          </button>
+          <small id="team-hires-hint">Modo travado. Clique para desbloquear.</small>
+          <button id="theme-toggle" class="ghost toggle-btn sidebar-theme" type="button">Modo escuro</button>
+        </div>
+      </aside>
+
+      <main class="main-content content">
+        <header class="toolbar header-bar resumo-hero" id="global-toolbar">
+          <div class="toolbar-top">
+            <div class="title-wrap page-title">
+              <h2 id="toolbar-title">Visão Geral</h2>
+              <p id="toolbar-subtitle">Monitoramento financeiro e controle de gastos.</p>
+            </div>
+            <div class="header-balance" id="header-balance-container" hidden>
+              <small>Saldo Restante</small>
+              <strong id="header-balance-value">R$ 0,00</strong>
+            </div>
+          </div>
+
+          <div class="filters controls-bar" id="toolbar-filters">
+            <label class="control-group">
+              Ano fiscal
+              <select id="filter-ano"></select>
+            </label>
+            <label class="control-group">
+              Semestre
+              <select id="filter-semestre">
+                <option value="">Anual (Todos)</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+              </select>
+            </label>
+            <div class="toolbar-filter-actions">
+              <button id="apply-filters" class="primary btn btn-primary" type="button">Atualizar</button>
+              <button id="clear-filters" class="ghost btn btn-ghost" type="button" hidden>Limpar</button>
+            </div>
+          </div>
+        </header>
+
+        <section class="view view-section active" id="view-resumo">
+          <div class="card">
+            <div class="card-head card-header">
+              <h3>Resumo Orçamentário por Tópico</h3>
+            </div>
+            <div class="status-legend">
+              <p class="legend-note">
+                As cores abaixo são aplicadas nos valores de <strong>Despesas Totais</strong> e na leitura de execução.
+              </p>
+              <span class="legend-item ok">Verde: abaixo de 90%</span>
+              <span class="legend-item proximo">Amarelo: de 90% a 99,99%</span>
+              <span class="legend-item limite">Neutro: exatamente 100%</span>
+              <span class="legend-item alerta">Vermelho: acima de 100% (ultrapassou)</span>
+            </div>
+            <div class="table-wrap table-container">
+              <table>
+                <thead id="resumo-head"></thead>
+                <tbody id="resumo-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head card-header">
+              <h3 id="detalhes-titulo">Detalhes do Tópico</h3>
+              <button id="btn-nova-compra" class="primary btn btn-primary" type="button">Nova compra</button>
+            </div>
+            <div class="table-wrap table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Fornecedor</th>
+                    <th>Responsável</th>
+                    <th>Valor</th>
+                    <th>Semestre</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="detalhes-body"></tbody>
+              </table>
+            </div>
+            <div class="detalhes-total">
+              <span>Total do tópico:</span>
+              <strong id="detalhes-total">R$ 0,00</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="view view-section" id="view-topicos">
+          <div class="card">
+            <div class="card-head card-header">
+              <h3>Tópicos de Compra</h3>
+              <span id="topicos-count">0 tópicos</span>
+            </div>
+            <div id="topicos-grid" class="topicos-grid"></div>
+          </div>
+        </section>
+
+        <section class="view view-section" id="view-relatorios">
+          <div class="card">
+            <div class="card-head card-header">
+              <h3>Exportações</h3>
+            </div>
+            <p class="export-desc">
+              Exporta com os filtros atuais aplicados. O Excel usa o template oficial e atualiza os valores por tópico.
+            </p>
+            <p class="export-desc">Cada projeto usa sua própria base local (ex.: <code>data/PEOCON/*.json</code> e <code>data/FELLOW/*.json</code>).</p>
+            <div class="export-actions">
+              <button id="export-excel" class="primary btn btn-primary" type="button">Exportar Excel</button>
+              <button id="export-csv" class="ghost btn btn-ghost" type="button">Exportar CSV</button>
+              <button id="export-pdf" class="ghost btn btn-ghost" type="button">Exportar PDF</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="view view-section" id="view-config">
+          <div id="config-react-root" hidden></div>
+          <div id="config-legacy-shell">
+            <div class="card">
+              <div class="card-head card-header">
+                <h3>Configurações</h3>
+                <div class="config-head-actions">
+                  <div id="edit-mode-control" class="edit-mode-control">
+                    <span class="edit-switch-label">Modo edição</span>
+                    <label class="edit-switch" for="toggle-edit-mode" title="Ativar modo edição">
+                      <input id="toggle-edit-mode" type="checkbox" role="switch" aria-label="Ativar modo edição" />
+                      <span class="edit-switch-track" aria-hidden="true">
+                        <span class="edit-switch-thumb"></span>
+                      </span>
+                    </label>
+                    <span id="edit-mode-state" class="edit-mode-state">Desativado</span>
+                  </div>
+                  <button id="btn-add-topico" class="primary btn btn-primary" type="button" disabled hidden>
+                    Acrescentar tópico
+                  </button>
+                </div>
+              </div>
+              <p class="export-desc">
+                Selecione um macro-tópico para ajustar tópicos, orçamento total do programa e permissões de lançamento.
+              </p>
+              <div class="config-toolbar">
+                <label class="control-group">
+                  Macro-tópico
+                  <select id="config-group-filter"></select>
+                </label>
+              </div>
+              <div class="table-wrap table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tópico</th>
+                      <th>Grupo</th>
+                      <th>Orçamento Total do Programa (BRL)</th>
+                      <th>No resumo</th>
+                      <th>Lançamento ativo</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="config-topicos-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="modal-compra">
+      <form id="form-compra" method="dialog" class="modal-content">
+        <div class="modal-head modal-header">
+          <h3 id="modal-title">Novo lançamento</h3>
+          <button type="button" id="close-modal" class="ghost btn btn-ghost">Fechar</button>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Grupo
+            <select id="compra-grupo" required></select>
+          </label>
+          <label>
+            Tópico
+            <select id="compra-topico" required></select>
+          </label>
+          <label>
+            Data
+            <input type="date" id="compra-data" required />
+          </label>
+          <label class="col-full">
+            Descrição
+            <input type="text" id="compra-descricao" maxlength="180" required />
+          </label>
+          <label>
+            Fornecedor
+            <input type="text" id="compra-fornecedor" maxlength="120" />
+          </label>
+          <label>
+            Responsável
+            <input type="text" id="compra-responsavel" maxlength="120" />
+          </label>
+          <label>
+            Valor (BRL)
+            <input type="number" id="compra-valor" step="0.01" min="0.01" required />
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="cancel-modal" class="ghost btn btn-ghost">Cancelar</button>
+          <button type="submit" id="submit-compra" class="primary btn btn-primary">Salvar compra</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="modal-topico">
+      <form id="form-topico" method="dialog" class="modal-content">
+        <div class="modal-head modal-header">
+          <h3 id="modal-topico-title">Acrescentar tópico</h3>
+          <button type="button" id="close-modal-topico" class="ghost btn btn-ghost">Fechar</button>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Nome do tópico
+            <input type="text" id="topico-nome" maxlength="120" required />
+          </label>
+          <label>
+            Grupo
+            <select id="topico-grupo" required></select>
+          </label>
+          <label>
+            Orçamento total do programa (BRL)
+            <input type="number" id="topico-orcamento" step="0.01" min="0" required />
+          </label>
+          <label class="inline-check topico-check">
+            <input type="checkbox" id="topico-incluir-resumo" checked />
+            Incluir no resumo
+          </label>
+          <label class="inline-check topico-check">
+            <input type="checkbox" id="topico-permitir-lancamento" checked />
+            Lançamento ativo
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="cancel-modal-topico" class="ghost btn btn-ghost">Cancelar</button>
+          <button type="submit" id="submit-topico" class="primary btn btn-primary">Salvar tópico</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="project-picker" class="project-picker" hidden aria-hidden="true">
+      <div class="project-picker-card" role="dialog" aria-modal="true" aria-labelledby="project-picker-title">
+        <h2 id="project-picker-title">Escolha o projeto</h2>
+        <p>Este login possui acesso a mais de um projeto. Selecione qual deseja abrir agora.</p>
+        <div id="project-picker-list" class="project-picker-list"></div>
+        <p id="project-picker-error" class="project-picker-error" role="alert" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
+

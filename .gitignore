@@ -20,7 +20,7 @@ coverage/
 .netlify/
 .turbo/
 
-# Arquivos gerados pelo projeto
+# Arquivos gerados
 exports/
 .runtime-data/
 runtime-data/
@@ -31,8 +31,7 @@ tmp-*.xlsx
 public/react/config-app.js
 public/react/config-app.css
 
-# Dados locais de execução/autenticação
-# Mantém apenas os seeds versionados.
+# Dados locais, mantendo seeds
 data/**
 !data/seeds/
 !data/seeds/**/

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "nurse-1",
+    "nome": "Nurse 1",
+    "grupo": "TEAM HIRES",
+    "templateRow": 15,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 1,
+    "orcamentoProgramaBRL": 268981
+  },
+  {
+    "id": "nurse-2",
+    "nome": "Nurse 2",
+    "grupo": "TEAM HIRES",
+    "templateRow": 16,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 2,
+    "orcamentoProgramaBRL": 112076
+  },
+  {
+    "id": "project-coordinator",
+    "nome": "Project Coordinator",
+    "grupo": "TEAM HIRES",
+    "templateRow": 17,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 3,
+    "orcamentoProgramaBRL": 75679
+  },
+  {
+    "id": "administrative-assistant-1",
+    "nome": "Administrative Assistant 1",
+    "grupo": "TEAM HIRES",
+    "templateRow": 18,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 4,
+    "orcamentoProgramaBRL": 66243
+  },
+  {
+    "id": "administrative-assistant-2",
+    "nome": "Administrative Assistant 2",
+    "grupo": "TEAM HIRES",
+    "templateRow": 19,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 5,
+    "orcamentoProgramaBRL": 62931
+  },
+  {
+    "id": "computer",
+    "nome": "Computer",
+    "grupo": "COMMUNICATIONS & PUBLICATIONS",
+    "templateRow": 21,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 6,
+    "orcamentoProgramaBRL": 18251
+  },
+  {
+    "id": "didactic-material",
+    "nome": "Didactic Material",
+    "grupo": "COMMUNICATIONS & PUBLICATIONS",
+    "templateRow": 22,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 7,
+    "orcamentoProgramaBRL": 30000
+  },
+  {
+    "id": "publications",
+    "nome": "Publications",
+    "grupo": "COMMUNICATIONS & PUBLICATIONS",
+    "templateRow": 23,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 8,
+    "orcamentoProgramaBRL": 25000
+  },
+  {
+    "id": "technical-equipment-infrastructure",
+    "nome": "Technical Equipment & Infrastructure",
+    "grupo": "COMMUNICATIONS & PUBLICATIONS",
+    "templateRow": 24,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 9,
+    "orcamentoProgramaBRL": 50000
+  },
+  {
+    "id": "team-transportation-meals",
+    "nome": "Team Transportation & Meals",
+    "grupo": "COMMUNICATIONS & PUBLICATIONS",
+    "templateRow": 25,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 10,
+    "orcamentoProgramaBRL": 30000
+  },
+  {
+    "id": "events-conferences",
+    "nome": "Events & Conferences",
+    "grupo": "COMMUNICATIONS & PUBLICATIONS",
+    "templateRow": 26,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 11,
+    "orcamentoProgramaBRL": 60000
+  },
+  {
+    "id": "just-mine",
+    "nome": "Just Mine",
+    "grupo": "THIRD PARTY SERVICES",
+    "templateRow": 28,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 12,
+    "orcamentoProgramaBRL": 100000
+  },
+  {
+    "id": "external-consultant",
+    "nome": "External Consultant",
+    "grupo": "THIRD PARTY SERVICES",
+    "templateRow": 29,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 13,
+    "orcamentoProgramaBRL": 30000
+  },
+  {
+    "id": "digital-marketing",
+    "nome": "Digital Marketing",
+    "grupo": "THIRD PARTY SERVICES",
+    "templateRow": 30,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 14,
+    "orcamentoProgramaBRL": 20000
+  }
+]

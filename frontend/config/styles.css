@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.config-react-scope {
+  font-family: Manrope, "Segoe UI", Tahoma, sans-serif;
+}
+
+.config-react-scope input[type="number"]::-webkit-outer-spin-button,
+.config-react-scope input[type="number"]::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.config-react-scope input[type="number"] {
+  -moz-appearance: textfield;
+}
