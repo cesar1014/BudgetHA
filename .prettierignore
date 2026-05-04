@@ -1,0 +1,10 @@
+node_modules/
+dist/
+exports/
+.tmp_restore/
+public/react/
+data/backups/
+data/**/lancamentos*.json
+data/**/lancamentos-pending-sync.json
+*.zip
+

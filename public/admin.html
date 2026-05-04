@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administracao | Gestao Orcamentaria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./admin-page.css" />
+  </head>
+
+  <body class="admin-page">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand">
+          <a href="/" class="admin-back-link">Voltar ao sistema</a>
+          <h1>Painel de Administracao</h1>
+          <p class="admin-sidebar-note" id="admin-welcome"></p>
+        </div>
+
+        <div class="admin-sidebar-actions">
+          <button id="btn-edit-profile" class="primary btn btn-primary" type="button">
+            Alterar nome/senha
+          </button>
+          <div class="admin-theme-row">
+            <span>Tema</span>
+            <div class="menu-theme-toggle admin-menu-theme-toggle">
+              <input
+                id="btn-theme-toggle"
+                class="theme-toggle-input"
+                type="checkbox"
+                role="switch"
+                aria-label="Alternar tema claro e escuro"
+              />
+              <label
+                for="btn-theme-toggle"
+                class="theme-toggle-label"
+                title="Alternar tema claro e escuro"
+              >
+                <span class="theme-toggle-stars" aria-hidden="true">
+                  <span class="theme-toggle-star theme-toggle-star-1"></span>
+                  <span class="theme-toggle-star theme-toggle-star-2"></span>
+                  <span class="theme-toggle-star theme-toggle-star-3"></span>
+                  <span class="theme-toggle-star theme-toggle-star-4"></span>
+                  <span class="theme-toggle-star theme-toggle-star-5"></span>
+                </span>
+                <span class="theme-toggle-clouds" aria-hidden="true">
+                  <span class="theme-toggle-cloud theme-toggle-cloud-1"></span>
+                  <span class="theme-toggle-cloud theme-toggle-cloud-2"></span>
+                  <span class="theme-toggle-cloud theme-toggle-cloud-3"></span>
+                </span>
+                <span class="theme-toggle-knob" aria-hidden="true">
+                  <span class="theme-toggle-crater theme-toggle-crater-1"></span>
+                  <span class="theme-toggle-crater theme-toggle-crater-2"></span>
+                  <span class="theme-toggle-crater theme-toggle-crater-3"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <button id="btn-refresh" class="ghost btn btn-ghost" type="button">
+            Atualizar dados
+          </button>
+        </div>
+
+        <nav class="admin-main-menu" aria-label="Menu da administracao">
+          <a class="admin-main-menu-link" href="/hub">Home</a>
+          <button class="admin-tab active" data-panel="projects" type="button">Projetos</button>
+          <button class="admin-tab" data-panel="users" type="button">Usuarios</button>
+          <button class="admin-tab" data-panel="reports" type="button">Relatorios</button>
+        </nav>
+      </aside>
+
+      <main class="admin-content">
+        <header class="admin-content-head">
+          <div>
+            <h2>Gestao da Plataforma</h2>
+            <p class="admin-section-desc">
+              Controle acessos, projetos e departamentos com regras centralizadas.
+            </p>
+          </div>
+          <div class="admin-content-head-actions">
+            <button id="btn-add-project" class="ghost btn btn-ghost" type="button">
+              + Novo projeto
+            </button>
+            <button id="btn-add-user" class="ghost btn btn-ghost" type="button">
+              + Novo usuario
+            </button>
+          </div>
+        </header>
+
+        <section id="panel-projects" class="admin-panel active">
+          <div class="admin-filter-bar">
+            <label>
+              Filtrar por departamento:
+              <select id="filter-project-dept">
+                <option value="">Todos</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-head card-header">
+              <h3 id="projects-title">Projetos</h3>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Codigo</th>
+                    <th>Nome</th>
+                    <th>Departamento</th>
+                    <th>Status</th>
+                    <th>Acoes</th>
+                  </tr>
+                </thead>
+                <tbody id="projects-body"></tbody>
+              </table>
+            </div>
+            <div id="projects-empty" class="admin-empty" hidden>Nenhum projeto encontrado.</div>
+          </div>
+        </section>
+
+        <section id="panel-users" class="admin-panel">
+          <div class="admin-filter-bar">
+            <label>
+              Filtrar por projeto:
+              <select id="filter-user-project">
+                <option value="">Todos</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-head card-header">
+              <h3>Usuarios</h3>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Tipo</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Super Admin</th>
+                    <th>Projetos</th>
+                    <th>Acoes</th>
+                  </tr>
+                </thead>
+                <tbody id="users-body"></tbody>
+              </table>
+            </div>
+            <div id="users-empty" class="admin-empty" hidden>Nenhum usuario encontrado.</div>
+          </div>
+        </section>
+
+        <section id="panel-reports" class="admin-panel">
+          <div id="stat-cards" class="admin-stat-cards"></div>
+
+          <div class="card">
+            <div class="card-head card-header">
+              <h3>Departamentos</h3>
+            </div>
+            <p class="admin-inline-note" id="departments-info"></p>
+            <div class="admin-form-row admin-form-row-spaced">
+              <label>
+                Nome do departamento
+                <input id="dept-name" type="text" maxlength="120" placeholder="Ex: Engenharia" />
+              </label>
+              <label>
+                Ramal
+                <input id="dept-phone" type="text" maxlength="20" placeholder="Ex: 1234" />
+              </label>
+            </div>
+            <div class="admin-form-actions admin-form-actions-compact">
+              <button id="dept-cancel" class="ghost btn btn-ghost" type="button" hidden>
+                Cancelar edicao
+              </button>
+              <button id="dept-save" class="primary btn btn-primary" type="button">
+                Salvar departamento
+              </button>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Ramal</th>
+                    <th>Projetos</th>
+                    <th>Acoes</th>
+                  </tr>
+                </thead>
+                <tbody id="departments-body"></tbody>
+              </table>
+            </div>
+            <div id="departments-empty" class="admin-empty" hidden>
+              Nenhum departamento cadastrado.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head card-header">
+              <h3>Resumo por projeto</h3>
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Projeto</th>
+                    <th>Nome</th>
+                    <th>Departamento</th>
+                    <th>Status</th>
+                    <th>Usuarios com acesso</th>
+                  </tr>
+                </thead>
+                <tbody id="reports-projects-body"></tbody>
+              </table>
+            </div>
+            <div id="reports-empty" class="admin-empty" hidden>
+              Nenhum dado de relatorio disponivel.
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="project-modal-overlay" class="admin-modal-overlay">
+      <div class="admin-modal">
+        <div class="admin-modal-head">
+          <h3 id="project-modal-title">Novo Projeto</h3>
+          <p class="admin-inline-note admin-modal-note">
+            Defina o projeto e, se precisar, inicie o cadastro de usuarios vinculados.
+          </p>
+        </div>
+        <div class="admin-form-grid">
+          <label>
+            Codigo (gerado automaticamente pelo nome)
+            <input type="text" id="pmodal-code" maxlength="64" readonly />
+          </label>
+          <label>
+            Nome
+            <input type="text" id="pmodal-name" maxlength="120" />
+          </label>
+          <div class="admin-form-row">
+            <label>
+              Departamento
+              <select id="pmodal-dept">
+                <option value="">Sem departamento</option>
+              </select>
+            </label>
+            <label>
+              Status
+              <select id="pmodal-status">
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+                <option value="concluido">Concluido</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div class="admin-form-actions admin-form-actions-space">
+          <div class="admin-project-quick-actions">
+            <button id="pmodal-create-user" class="ghost btn btn-ghost" type="button" hidden>
+              Cadastrar usuario para este projeto
+            </button>
+            <button id="pmodal-finalize" class="admin-danger-btn" type="button" hidden>
+              Finalizar projeto
+            </button>
+          </div>
+          <div class="admin-project-secondary-actions">
+            <button id="pmodal-cancel" class="ghost btn btn-ghost" type="button">Cancelar</button>
+            <button id="pmodal-save" class="primary btn btn-primary" type="button">
+              Salvar projeto
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="user-modal-overlay" class="admin-modal-overlay">
+      <div class="admin-modal">
+        <div class="admin-modal-head">
+          <h3 id="user-modal-title">Novo Usuario</h3>
+          <p class="admin-inline-note admin-modal-note">
+            Atualize dados de perfil, privilegios e acessos por projeto.
+          </p>
+        </div>
+        <div class="admin-form-grid">
+          <label>
+            Username (altere no botao de dados de acesso)
+            <input type="text" id="modal-username" maxlength="120" readonly />
+          </label>
+          <div class="admin-form-row">
+            <label>
+              Tipo de conta
+              <select id="modal-account-type">
+                <option value="user">Usuario</option>
+                <option value="project">Projeto</option>
+              </select>
+            </label>
+            <label>
+              Nivel de acesso
+              <select id="modal-role">
+                <option value="viewer">Viewer</option>
+                <option value="editor">Editor</option>
+                <option value="admin">Admin</option>
+              </select>
+            </label>
+          </div>
+          <div class="admin-form-row">
+            <label>
+              Projeto padrao
+              <select id="modal-default-project">
+                <option value="">-</option>
+              </select>
+            </label>
+            <div class="admin-credentials-card">
+              <p class="admin-credentials-title">Dados de acesso</p>
+              <button id="modal-open-credentials" class="ghost btn btn-ghost" type="button">
+                Alterar username/senha
+              </button>
+              <p id="modal-credentials-summary" class="admin-inline-note">
+                Nenhuma alteracao de credencial pendente.
+              </p>
+            </div>
+          </div>
+          <div class="admin-form-row">
+            <label class="admin-inline-check">
+              <input type="checkbox" id="modal-is-active" />
+              Ativo
+            </label>
+          </div>
+
+          <div class="admin-super-admin-control">
+            <div>
+              <strong>Admin da plataforma</strong>
+              <p id="modal-super-admin-hint">Promove este usuario para Super Admin global.</p>
+            </div>
+            <label class="admin-inline-check">
+              <input type="checkbox" id="modal-is-super-admin" />
+              Super Admin global
+            </label>
+          </div>
+
+          <div>
+            <div class="admin-membership-head">
+              <label>Acesso por projeto (marque e defina o role)</label>
+              <button id="modal-clear-memberships" class="ghost btn btn-ghost" type="button">
+                Remover acessos
+              </button>
+            </div>
+
+            <p class="admin-inline-note">Conta de projeto aceita somente 1 projeto marcado.</p>
+            <div id="modal-memberships" class="admin-memberships"></div>
+          </div>
+        </div>
+        <div class="admin-form-actions">
+          <button id="modal-cancel" class="ghost btn btn-ghost" type="button">Cancelar</button>
+          <button id="modal-save" class="primary btn btn-primary" type="button">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="credentials-modal-overlay" class="admin-modal-overlay">
+      <div class="admin-modal admin-modal-compact">
+        <div class="admin-modal-head">
+          <h3>Atualizar dados de acesso</h3>
+          <p class="admin-inline-note admin-modal-note">
+            Escolha novo username e senha para este usuario.
+          </p>
+        </div>
+        <div class="admin-form-grid">
+          <label>
+            Username
+            <input type="text" id="credentials-username" maxlength="120" autocomplete="username" />
+          </label>
+          <label>
+            Nova senha
+            <input type="password" id="credentials-password" autocomplete="new-password" />
+          </label>
+          <label>
+            Confirmar nova senha
+            <input type="password" id="credentials-password-confirm" autocomplete="new-password" />
+          </label>
+        </div>
+        <p class="admin-inline-note admin-inline-note-spaced">
+          Deixe a senha em branco para manter a senha atual.
+        </p>
+        <div class="admin-form-actions">
+          <button id="credentials-cancel" class="ghost btn btn-ghost" type="button">
+            Cancelar
+          </button>
+          <button id="credentials-save" class="primary btn btn-primary" type="button">
+            Salvar credenciais
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="profile-modal-overlay" class="admin-modal-overlay">
+      <div class="admin-modal admin-modal-compact">
+        <div class="admin-modal-head">
+          <h3>Alterar perfil</h3>
+          <p class="admin-inline-note admin-modal-note">
+            Atualize seu nome de usuario e senha de acesso.
+          </p>
+        </div>
+        <div class="admin-form-grid">
+          <label>
+            Nome de usuario
+            <input type="text" id="profile-username" maxlength="120" autocomplete="username" />
+          </label>
+          <label>
+            Nova senha
+            <input type="password" id="profile-password" autocomplete="new-password" />
+          </label>
+          <label>
+            Confirmar nova senha
+            <input type="password" id="profile-password-confirm" autocomplete="new-password" />
+          </label>
+        </div>
+        <div class="admin-form-actions">
+          <button id="profile-cancel" class="ghost btn btn-ghost" type="button">Cancelar</button>
+          <button id="profile-save" class="primary btn btn-primary" type="button">
+            Salvar perfil
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="admin-toast" class="admin-toast"></div>
+
+    <script src="./encoding-guard.js"></script>
+    <script src="./admin.js" type="module"></script>
+  </body>
+</html>

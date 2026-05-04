@@ -1,0 +1,13 @@
+node_modules/
+dist/
+exports/
+.runtime-data/
+runtime-data/
+.env
+.env.*
+!.env.example
+.tmp_restore/
+*.zip
+data/**
+!data/seeds/
+!data/seeds/**

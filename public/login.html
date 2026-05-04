@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./early-theme.js"></script>
+    <title>Página de Login | Gestão Orçamentária</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./login-page.css" />
+  </head>
+
+  <body class="login-page">
+    <!-- Animated background orbs -->
+    <div class="login-bg-orb login-bg-orb-1"></div>
+    <div class="login-bg-orb login-bg-orb-2"></div>
+    <div class="login-bg-orb login-bg-orb-3"></div>
+
+    <main class="login-layout">
+      <section class="login-shell" aria-labelledby="login-title">
+        <aside class="login-brand-panel">
+          <div class="brand">
+            <div class="brand-info">
+              <h1>PROJETOS</h1>
+              <p>Gest&atilde;o Or&ccedil;ament&aacute;ria</p>
+            </div>
+            <div class="menu-theme-toggle login-menu-theme-toggle">
+              <input
+                id="login-theme-toggle"
+                class="theme-toggle-input"
+                type="checkbox"
+                role="switch"
+                aria-label="Alternar tema claro e escuro"
+              />
+              <label
+                for="login-theme-toggle"
+                class="theme-toggle-label"
+                title="Alternar tema claro e escuro"
+              >
+                <span class="theme-toggle-stars" aria-hidden="true">
+                  <span class="theme-toggle-star theme-toggle-star-1"></span>
+                  <span class="theme-toggle-star theme-toggle-star-2"></span>
+                  <span class="theme-toggle-star theme-toggle-star-3"></span>
+                  <span class="theme-toggle-star theme-toggle-star-4"></span>
+                  <span class="theme-toggle-star theme-toggle-star-5"></span>
+                </span>
+                <span class="theme-toggle-clouds" aria-hidden="true">
+                  <span class="theme-toggle-cloud theme-toggle-cloud-1"></span>
+                  <span class="theme-toggle-cloud theme-toggle-cloud-2"></span>
+                  <span class="theme-toggle-cloud theme-toggle-cloud-3"></span>
+                </span>
+                <span class="theme-toggle-knob" aria-hidden="true">
+                  <span class="theme-toggle-crater theme-toggle-crater-1"></span>
+                  <span class="theme-toggle-crater theme-toggle-crater-2"></span>
+                  <span class="theme-toggle-crater theme-toggle-crater-3"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <p class="login-brand-copy">
+            Plataforma de gest&atilde;o or&ccedil;ament&aacute;ria com acesso restrito para
+            acompanhamento financeiro institucional.
+          </p>
+        </aside>
+
+        <section class="card login-card">
+          <h2 id="login-title">Acessar sistema</h2>
+          <p class="login-subtitle">
+            Informe seu usuário (ou login do projeto) e a senha para entrar no painel.
+          </p>
+
+          <form id="login-form" novalidate>
+            <div class="field login-field">
+              <label for="username">Usuário ou projeto</label>
+              <input id="username" name="username" autocomplete="username" required />
+              <small id="project-hint" class="field-hint">Exemplo: nome do projeto</small>
+            </div>
+            <div class="field login-field">
+              <label for="password">Senha</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+            <button id="submit-btn" type="submit" class="btn btn-primary login-submit">
+              Entrar
+            </button>
+            <div id="error-message" class="error login-error" role="alert" aria-live="polite"></div>
+          </form>
+        </section>
+      </section>
+    </main>
+    <script src="./encoding-guard.js"></script>
+    <script src="./login.js" type="module"></script>
+  </body>
+</html>

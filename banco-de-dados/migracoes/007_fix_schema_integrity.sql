@@ -1,0 +1,352 @@
+-- Site Relatorio - Migracao 007: correcao de integridade do schema existente
+-- Execute este arquivo no SQL Editor do Supabase se o banco ja foi criado antes
+-- desta revisao. Ele corrige principalmente a FK de lancamentos e colunas usadas
+-- pelo painel administrativo/autenticacao.
+
+BEGIN;
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE OR REPLACE FUNCTION public.set_updated_at_timestamp()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.set_lancamentos_updated_at()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  NEW.atualizado_em = now();
+  RETURN NEW;
+END;
+$$;
+
+CREATE TABLE IF NOT EXISTS public.departments (
+  id text PRIMARY KEY DEFAULT ('dept_' || substr(md5((random()::text || clock_timestamp()::text)), 1, 12)),
+  name text NOT NULL,
+  phone_extension text,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT departments_name_len_chk CHECK (char_length(btrim(name)) BETWEEN 1 AND 120),
+  CONSTRAINT departments_phone_extension_len_chk CHECK (char_length(coalesce(phone_extension, '')) <= 20)
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_departments_name_lower
+  ON public.departments (lower(btrim(name)));
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'trg_departments_updated_at') THEN
+    CREATE TRIGGER trg_departments_updated_at
+      BEFORE UPDATE ON public.departments
+      FOR EACH ROW
+      EXECUTE FUNCTION public.set_updated_at_timestamp();
+  END IF;
+END
+$$;
+
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS display_order integer NOT NULL DEFAULT 0;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS brand_name text;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS department text;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS department_id text;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS categories text[] NOT NULL DEFAULT '{}'::text[];
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS status text;
+
+UPDATE public.projects
+SET status = CASE
+  WHEN status IS NULL OR btrim(status) = '' THEN CASE WHEN is_active = false THEN 'inativo' ELSE 'ativo' END
+  WHEN lower(btrim(status)) IN ('ativo', 'inativo', 'concluido') THEN lower(btrim(status))
+  WHEN is_active = false THEN 'inativo'
+  ELSE 'ativo'
+END;
+
+ALTER TABLE public.projects ALTER COLUMN status SET DEFAULT 'ativo';
+ALTER TABLE public.projects ALTER COLUMN status SET NOT NULL;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'projects_status_chk') THEN
+    ALTER TABLE public.projects
+      ADD CONSTRAINT projects_status_chk CHECK (status IN ('ativo', 'inativo', 'concluido'));
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'projects_department_id_fk') THEN
+    ALTER TABLE public.projects
+      ADD CONSTRAINT projects_department_id_fk
+      FOREIGN KEY (department_id)
+      REFERENCES public.departments(id)
+      ON UPDATE CASCADE
+      ON DELETE SET NULL;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'trg_projects_updated_at') THEN
+    CREATE TRIGGER trg_projects_updated_at
+      BEFORE UPDATE ON public.projects
+      FOR EACH ROW
+      EXECUTE FUNCTION public.set_updated_at_timestamp();
+  END IF;
+END
+$$;
+
+CREATE INDEX IF NOT EXISTS idx_projects_active_order
+  ON public.projects (is_active, display_order);
+
+CREATE INDEX IF NOT EXISTS idx_projects_status
+  ON public.projects (status);
+
+CREATE INDEX IF NOT EXISTS idx_projects_department_id
+  ON public.projects (department_id)
+  WHERE department_id IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_projects_categories_gin
+  ON public.projects USING GIN (categories);
+
+ALTER TABLE public.app_users ADD COLUMN IF NOT EXISTS account_type text;
+ALTER TABLE public.app_users ADD COLUMN IF NOT EXISTS default_project_code text;
+ALTER TABLE public.app_users ADD COLUMN IF NOT EXISTS last_password_reset_at timestamptz;
+
+UPDATE public.app_users
+SET account_type = 'user'
+WHERE account_type IS NULL OR btrim(account_type) = '';
+
+ALTER TABLE public.app_users ALTER COLUMN account_type SET DEFAULT 'user';
+ALTER TABLE public.app_users ALTER COLUMN account_type SET NOT NULL;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'app_users_account_type_chk') THEN
+    ALTER TABLE public.app_users
+      ADD CONSTRAINT app_users_account_type_chk CHECK (account_type IN ('user', 'project'));
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'app_users_default_project_code_fk') THEN
+    ALTER TABLE public.app_users
+      ADD CONSTRAINT app_users_default_project_code_fk
+      FOREIGN KEY (default_project_code)
+      REFERENCES public.projects(code)
+      ON UPDATE CASCADE
+      ON DELETE SET NULL;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'trg_app_users_updated_at') THEN
+    CREATE TRIGGER trg_app_users_updated_at
+      BEFORE UPDATE ON public.app_users
+      FOR EACH ROW
+      EXECUTE FUNCTION public.set_updated_at_timestamp();
+  END IF;
+END
+$$;
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_app_users_username_lower
+  ON public.app_users (lower(btrim(username)));
+
+CREATE INDEX IF NOT EXISTS idx_app_users_account_type
+  ON public.app_users (account_type);
+
+CREATE TABLE IF NOT EXISTS public.project_memberships (
+  user_id text NOT NULL REFERENCES public.app_users(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  project_code text NOT NULL REFERENCES public.projects(code) ON UPDATE CASCADE ON DELETE CASCADE,
+  role text NOT NULL DEFAULT 'viewer',
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT project_memberships_pk PRIMARY KEY (user_id, project_code),
+  CONSTRAINT project_memberships_role_chk CHECK (role IN ('admin', 'editor', 'viewer'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_project_memberships_project
+  ON public.project_memberships (project_code);
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'trg_project_memberships_updated_at') THEN
+    CREATE TRIGGER trg_project_memberships_updated_at
+      BEFORE UPDATE ON public.project_memberships
+      FOR EACH ROW
+      EXECUTE FUNCTION public.set_updated_at_timestamp();
+  END IF;
+END
+$$;
+
+ALTER TABLE public.auth_sessions ADD COLUMN IF NOT EXISTS allowed_projects text[] NOT NULL DEFAULT '{}'::text[];
+ALTER TABLE public.auth_sessions ADD COLUMN IF NOT EXISTS active_project_code text;
+ALTER TABLE public.auth_sessions ADD COLUMN IF NOT EXISTS requires_project_selection boolean NOT NULL DEFAULT false;
+
+UPDATE public.auth_sessions
+SET allowed_projects = ARRAY[project_code]
+WHERE coalesce(array_length(allowed_projects, 1), 0) = 0;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'auth_sessions_active_project_code_fk') THEN
+    ALTER TABLE public.auth_sessions
+      ADD CONSTRAINT auth_sessions_active_project_code_fk
+      FOREIGN KEY (active_project_code)
+      REFERENCES public.projects(code)
+      ON UPDATE CASCADE
+      ON DELETE SET NULL;
+  END IF;
+END
+$$;
+
+CREATE INDEX IF NOT EXISTS idx_auth_sessions_project_expires
+  ON public.auth_sessions (project_code, expires_at);
+
+-- Se o dump do Supabase apontar para audit_log_id_seq sem a sequence existir,
+-- recria a sequence com seguranca.
+CREATE SEQUENCE IF NOT EXISTS public.audit_log_id_seq;
+ALTER SEQUENCE public.audit_log_id_seq OWNED BY public.audit_log.id;
+ALTER TABLE public.audit_log
+  ALTER COLUMN id SET DEFAULT nextval('public.audit_log_id_seq'::regclass);
+
+SELECT setval(
+  'public.audit_log_id_seq',
+  greatest(coalesce((SELECT max(id) FROM public.audit_log), 0), 1),
+  true
+);
+
+ALTER TABLE public.lancamentos ADD COLUMN IF NOT EXISTS project_code text;
+ALTER TABLE public.lancamentos ADD COLUMN IF NOT EXISTS fornecedor text NOT NULL DEFAULT '';
+ALTER TABLE public.lancamentos ADD COLUMN IF NOT EXISTS responsavel text NOT NULL DEFAULT '';
+ALTER TABLE public.lancamentos ADD COLUMN IF NOT EXISTS criado_em timestamptz NOT NULL DEFAULT now();
+ALTER TABLE public.lancamentos ADD COLUMN IF NOT EXISTS atualizado_em timestamptz NOT NULL DEFAULT now();
+
+UPDATE public.lancamentos
+SET project_code = 'PEOCON'
+WHERE project_code IS NULL OR btrim(project_code) = '';
+
+ALTER TABLE public.lancamentos ALTER COLUMN project_code SET NOT NULL;
+
+-- Garante cadastro de projetos ja referenciados em bases antigas.
+INSERT INTO public.projects (code, name, is_active, status)
+SELECT DISTINCT btrim(project_code), btrim(project_code), true, 'ativo'
+FROM public.topicos
+WHERE project_code IS NOT NULL
+  AND btrim(project_code) <> ''
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO public.projects (code, name, is_active, status)
+SELECT DISTINCT btrim(project_code), btrim(project_code), true, 'ativo'
+FROM public.lancamentos
+WHERE project_code IS NOT NULL
+  AND btrim(project_code) <> ''
+ON CONFLICT (code) DO NOTHING;
+
+-- Remove FK antiga/quebrada e recria corretamente como FK composta.
+ALTER TABLE public.lancamentos DROP CONSTRAINT IF EXISTS lancamentos_topico_fk;
+
+-- Garante que todo lancamento aponte para um topico existente antes de criar a FK.
+INSERT INTO public.topicos (
+  project_code,
+  id,
+  nome,
+  grupo,
+  template_row,
+  incluir_no_resumo,
+  permitir_lancamento,
+  ordem,
+  orcamento_programa_brl
+)
+SELECT DISTINCT
+  l.project_code,
+  l.topico_id,
+  l.topico_id,
+  'COMMUNICATIONS & PUBLICATIONS'::text,
+  NULL::integer,
+  true::boolean,
+  true::boolean,
+  999::integer,
+  0::numeric(14,2)
+FROM public.lancamentos l
+LEFT JOIN public.topicos t
+  ON t.project_code = l.project_code
+ AND t.id = l.topico_id
+WHERE t.id IS NULL
+  AND l.project_code IS NOT NULL
+  AND btrim(l.topico_id) <> '';
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_valor_pos_chk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_valor_pos_chk CHECK (valor > 0);
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_semestre_chk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_semestre_chk CHECK (semestre IN ('S1', 'S2'));
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_ano_chk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_ano_chk CHECK (ano BETWEEN 2000 AND 2100);
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_topico_len_chk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_topico_len_chk CHECK (char_length(btrim(topico_id)) BETWEEN 1 AND 80);
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_descricao_len_chk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_descricao_len_chk CHECK (char_length(btrim(descricao)) BETWEEN 1 AND 500);
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_fornecedor_len_chk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_fornecedor_len_chk CHECK (char_length(fornecedor) <= 160);
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_responsavel_len_chk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_responsavel_len_chk CHECK (char_length(responsavel) <= 160);
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_project_code_len_chk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_project_code_len_chk CHECK (char_length(btrim(project_code)) BETWEEN 1 AND 64);
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'lancamentos_project_fk') THEN
+    ALTER TABLE public.lancamentos
+      ADD CONSTRAINT lancamentos_project_fk
+      FOREIGN KEY (project_code)
+      REFERENCES public.projects(code)
+      ON UPDATE CASCADE
+      ON DELETE CASCADE;
+  END IF;
+
+  ALTER TABLE public.lancamentos
+    ADD CONSTRAINT lancamentos_topico_fk
+    FOREIGN KEY (project_code, topico_id)
+    REFERENCES public.topicos(project_code, id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'trg_lancamentos_updated_at') THEN
+    CREATE TRIGGER trg_lancamentos_updated_at
+      BEFORE UPDATE ON public.lancamentos
+      FOR EACH ROW
+      EXECUTE FUNCTION public.set_lancamentos_updated_at();
+  END IF;
+END
+$$;
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_lancamentos_project_id
+  ON public.lancamentos (project_code, id);
+
+CREATE INDEX IF NOT EXISTS idx_lancamentos_project_data
+  ON public.lancamentos (project_code, data DESC);
+
+CREATE INDEX IF NOT EXISTS idx_lancamentos_project_ano_semestre
+  ON public.lancamentos (project_code, ano, semestre);
+
+CREATE INDEX IF NOT EXISTS idx_lancamentos_project_topico_data
+  ON public.lancamentos (project_code, topico_id, data DESC);
+
+COMMIT;

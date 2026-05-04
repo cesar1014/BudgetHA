@@ -1,0 +1,122 @@
+[
+  {
+    "id": "nurse-1",
+    "nome": "Medical resident grant",
+    "grupo": "TEAM HIRES",
+    "templateRow": 15,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 1,
+    "orcamentoProgramaBRL": 768000
+  },
+  {
+    "id": "nurse-2",
+    "nome": "Nursing resident grant",
+    "grupo": "TEAM HIRES",
+    "templateRow": 16,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 2,
+    "orcamentoProgramaBRL": 360000
+  },
+  {
+    "id": "project-coordinator",
+    "nome": "Administrative assistant salary",
+    "grupo": "TEAM HIRES",
+    "templateRow": 17,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 3,
+    "orcamentoProgramaBRL": 39746
+  },
+  {
+    "id": "administrative-assistant-1",
+    "nome": "Project coordinator salary",
+    "grupo": "TEAM HIRES",
+    "templateRow": 18,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 4,
+    "orcamentoProgramaBRL": 96000
+  },
+  {
+    "id": "administrative-assistant-2",
+    "nome": "Audiovisual salary",
+    "grupo": "TEAM HIRES",
+    "templateRow": 19,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 5,
+    "orcamentoProgramaBRL": 71579
+  },
+  {
+    "id": "computer",
+    "nome": "Nurse salary",
+    "grupo": "TEAM HIRES",
+    "templateRow": 21,
+    "incluirNoResumo": true,
+    "permitirLancamento": false,
+    "ordem": 6,
+    "orcamentoProgramaBRL": 89661
+  },
+  {
+    "id": "didactic-material",
+    "nome": "Operational fees (PG Lato Sensu/COREME)",
+    "grupo": "DIRECT COSTS",
+    "templateRow": 22,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 7,
+    "orcamentoProgramaBRL": 20000
+  },
+  {
+    "id": "publications",
+    "nome": "Infrastructure and equipement",
+    "grupo": "DIRECT COSTS",
+    "templateRow": 23,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 8,
+    "orcamentoProgramaBRL": 324054
+  },
+  {
+    "id": "technical-equipment-infrastructure",
+    "nome": "Transportation/operational reserve - External internships",
+    "grupo": "DIRECT COSTS",
+    "templateRow": 24,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 9,
+    "orcamentoProgramaBRL": 200000
+  },
+  {
+    "id": "team-transportation-meals",
+    "nome": "Advertising fees (Marketing/press)",
+    "grupo": "DIRECT COSTS",
+    "templateRow": 25,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 10,
+    "orcamentoProgramaBRL": 75000
+  },
+  {
+    "id": "events-conferences",
+    "nome": "Scientific and cultural events fee (Harena)",
+    "grupo": "DIRECT COSTS",
+    "templateRow": 26,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 11,
+    "orcamentoProgramaBRL": 100000
+  },
+  {
+    "id": "just-mine",
+    "nome": "Resident support fee",
+    "grupo": "DIRECT COSTS",
+    "templateRow": 28,
+    "incluirNoResumo": true,
+    "permitirLancamento": true,
+    "ordem": 12,
+    "orcamentoProgramaBRL": 250000
+  }
+]

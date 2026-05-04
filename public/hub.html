@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma de Projetos | Gestao Orcamentaria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body class="hub-page">
+    <header class="hub-nav">
+      <div class="hub-nav-inner">
+        <a href="/hub" class="hub-brand">PROJETOS</a>
+
+        <div class="hub-nav-actions">
+          <a id="hub-report-link" class="hub-nav-link" href="/?view=relatorios">Relatorio</a>
+          <a id="hub-admin-link" class="hub-nav-link" href="/admin" hidden>Administracao</a>
+          <div class="menu-theme-toggle hub-menu-theme-toggle">
+            <input
+              id="hub-theme-toggle"
+              class="theme-toggle-input"
+              type="checkbox"
+              role="switch"
+              aria-label="Alternar tema claro e escuro"
+            />
+            <label
+              for="hub-theme-toggle"
+              class="theme-toggle-label"
+              title="Alternar tema claro e escuro"
+            >
+              <span class="theme-toggle-stars" aria-hidden="true">
+                <span class="theme-toggle-star theme-toggle-star-1"></span>
+                <span class="theme-toggle-star theme-toggle-star-2"></span>
+                <span class="theme-toggle-star theme-toggle-star-3"></span>
+                <span class="theme-toggle-star theme-toggle-star-4"></span>
+                <span class="theme-toggle-star theme-toggle-star-5"></span>
+              </span>
+              <span class="theme-toggle-clouds" aria-hidden="true">
+                <span class="theme-toggle-cloud theme-toggle-cloud-1"></span>
+                <span class="theme-toggle-cloud theme-toggle-cloud-2"></span>
+                <span class="theme-toggle-cloud theme-toggle-cloud-3"></span>
+              </span>
+              <span class="theme-toggle-knob" aria-hidden="true">
+                <span class="theme-toggle-crater theme-toggle-crater-1"></span>
+                <span class="theme-toggle-crater theme-toggle-crater-2"></span>
+                <span class="theme-toggle-crater theme-toggle-crater-3"></span>
+              </span>
+            </label>
+          </div>
+          <button id="hub-logout" class="hub-nav-link" type="button">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="hub-layout">
+      <section class="hub-hero">
+        <div class="hub-hero-copy">
+          <h1 id="hub-greeting">Ola</h1>
+          <p id="hub-subtitle">Projetos disponiveis para acesso.</p>
+        </div>
+        <a id="hub-new-project" class="hub-new-project btn btn-primary" href="/admin" hidden
+          >+ Novo Projeto</a
+        >
+      </section>
+
+      <section class="hub-toolbar">
+        <div class="hub-filter-row">
+          <label class="hub-search-field" for="hub-search">
+            <input
+              id="hub-search"
+              type="search"
+              placeholder="Procurar por codigo ou nome do projeto..."
+            />
+          </label>
+
+          <label class="hub-department-field" for="hub-department">
+            <select id="hub-department" aria-label="Departamentos">
+              <option value="">Departamentos</option>
+            </select>
+          </label>
+
+          <div
+            id="hub-status-tabs"
+            class="hub-tabs"
+            role="tablist"
+            aria-label="Filtro por status"
+          ></div>
+
+          <button
+            id="hub-clear-filters"
+            class="hub-filter-reset"
+            type="button"
+            title="Limpar filtros"
+          >
+            Limpar
+          </button>
+        </div>
+        <div id="hub-status" class="hub-status"></div>
+      </section>
+
+      <section id="hub-empty" class="hub-empty" hidden></section>
+      <section id="hub-grid" class="hub-grid" aria-live="polite"></section>
+    </main>
+
+    <script src="./encoding-guard.js"></script>
+    <script src="./hub.js" type="module"></script>
+  </body>
+</html>
