@@ -33,7 +33,7 @@
     "dev": "node --watch --watch-path=./server.js --watch-path=./src --watch-path=./api server.js",
     "dev:ui": "vite build --watch --mode development",
     "build:ui": "vite build",
-    "build": "npm run build:ui && node -e \"console.log('Build concluído')\"",
+    "build": "npm run build:ui && node scripts/prepare-vercel-output.js && node -e \"console.log('Build concluido')\"",
     "build:safe": "npm run build && npm run security:check",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
