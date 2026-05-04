@@ -105,6 +105,11 @@ const PROJECT_DEFINITIONS = {
 const runtimeKnownProjectCodes = new Set([APP_PROJECT_CODE, ...Object.keys(PROJECT_DEFINITIONS)]);
 const PENDING_SYNC_INTERVAL_MS = 30_000;
 const AUTH_USERS_JSON = String(process.env.APP_LOGIN_USERS_JSON ?? "").trim();
+const ADMIN_USERNAME = String(process.env.ADMIN_USERNAME ?? "").trim();
+const ADMIN_PASSWORD = String(process.env.ADMIN_PASSWORD ?? "");
+const ADMIN_PASSWORD_HASH = String(process.env.ADMIN_PASSWORD_HASH ?? "").trim();
+const ADMIN_PROJECTS = String(process.env.ADMIN_PROJECTS ?? "").trim();
+const ADMIN_DEFAULT_PROJECT = String(process.env.ADMIN_DEFAULT_PROJECT ?? "").trim();
 const LEGACY_AUTH_USERNAME = String(process.env.APP_LOGIN_USER ?? "").trim();
 const LEGACY_AUTH_PASSWORD = String(process.env.APP_LOGIN_PASSWORD ?? "");
 const AUTH_COOKIE_NAME = "peocon_session";
@@ -604,6 +609,9 @@ function parseAuthUsersFromConfig() {
       allowPlaintextPassword: false,
       sourceLabel: "APP_LOGIN_USERS_JSON",
     });
+  const configuredAdminProjects = ADMIN_PROJECTS
+    ? ADMIN_PROJECTS.split(/[,\n;]+/g).map((item) => item.trim())
+    : getKnownProjectCodes();
 
   if (AUTH_USERS_JSON) {
     let parsed;
@@ -671,10 +679,35 @@ function parseAuthUsersFromConfig() {
     }
   }
 
+  if (parsedUsers.length === 0 && ADMIN_USERNAME && (ADMIN_PASSWORD || ADMIN_PASSWORD_HASH)) {
+    if (ADMIN_PASSWORD && ADMIN_PASSWORD.length < 8) {
+      throw new Error("ADMIN_PASSWORD deve ter pelo menos 8 caracteres.");
+    }
+
+    const adminUser = normalizeAuthUserDefinition(
+      {
+        id: "admin",
+        username: ADMIN_USERNAME,
+        password: ADMIN_PASSWORD,
+        passwordHash: ADMIN_PASSWORD_HASH,
+        role: AUTH_ROLE_ADMIN,
+        isSuperAdmin: true,
+        allowedProjects: configuredAdminProjects,
+        defaultProjectCode: ADMIN_DEFAULT_PROJECT || APP_PROJECT_CODE,
+        isActive: true,
+      },
+      {
+        allowPlaintextPassword: Boolean(ADMIN_PASSWORD),
+        sourceLabel: ADMIN_PASSWORD_HASH ? "ADMIN_PASSWORD_HASH" : "ADMIN_PASSWORD",
+      }
+    );
+    if (adminUser) parsedUsers.push(adminUser);
+  }
+
   if (parsedUsers.length === 0 && (LEGACY_AUTH_USERNAME || LEGACY_AUTH_PASSWORD)) {
     if (IS_PRODUCTION_ENV) {
       throw new Error(
-        "APP_LOGIN_USER/APP_LOGIN_PASSWORD nao sao permitidos em producao. Use APP_LOGIN_USERS_JSON com passwordHash PBKDF2."
+        "APP_LOGIN_USER/APP_LOGIN_PASSWORD nao sao permitidos em producao. Use APP_LOGIN_USERS_JSON com passwordHash PBKDF2 ou ADMIN_USERNAME/ADMIN_PASSWORD na Vercel."
       );
     }
 
@@ -754,7 +787,7 @@ function ensureAuthUsersAvailable() {
 
   if (IS_PRODUCTION_ENV) {
     throw new Error(
-      "Nenhum usuario de login configurado. Use APP_LOGIN_USERS_JSON com passwordHash PBKDF2, auth-users.json em DATA_DIR/auth ou app_users no Supabase."
+      "Nenhum usuario de login configurado. Defina ADMIN_USERNAME e ADMIN_PASSWORD na Vercel, ou use APP_LOGIN_USERS_JSON com passwordHash PBKDF2, auth-users.json em DATA_DIR/auth ou app_users no Supabase."
     );
   }
 
@@ -804,7 +837,7 @@ if (
 ) {
   if (IS_PRODUCTION_ENV) {
     throw new Error(
-      "Nenhum usuário de login configurado. Defina APP_LOGIN_USERS_JSON ou APP_LOGIN_USER/APP_LOGIN_PASSWORD."
+      "Nenhum usuário de login configurado. Defina ADMIN_USERNAME e ADMIN_PASSWORD na Vercel, ou APP_LOGIN_USERS_JSON com passwordHash PBKDF2."
     );
   }
 

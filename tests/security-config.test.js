@@ -63,6 +63,40 @@ test("production startup rejects APP_LOGIN_USERS_JSON with plaintext password", 
   }
 });
 
+test("production startup accepts Vercel admin bootstrap variables", async () => {
+  const tempDataDir = await fs.mkdtemp(path.join(os.tmpdir(), "site-relatorio-vercel-admin-"));
+
+  try {
+    const result = spawnSync(
+      process.execPath,
+      ["--input-type=module", "-e", 'const mod = await import("./server.js"); console.log(typeof mod.createServerApp);'],
+      {
+        cwd: path.resolve("."),
+        env: {
+          ...process.env,
+          NODE_ENV: "production",
+          VERCEL: "1",
+          DATA_DIR: tempDataDir,
+          SUPABASE_URL: "",
+          SUPABASE_SERVICE_ROLE_KEY: "",
+          APP_PROJECT_CODE: "PEOCON",
+          AUTH_TOKEN_SECRET: "vercel_admin_bootstrap_secret_please_rotate",
+          APP_LOGIN_USERS_JSON: "",
+          ADMIN_USERNAME: "ADMIN",
+          ADMIN_PASSWORD: "StrongPass123!",
+          ADMIN_PROJECTS: "PEOCON,FELLOW",
+          ADMIN_DEFAULT_PROJECT: "PEOCON",
+        },
+        encoding: "utf8",
+      }
+    );
+    assert.equal(result.status, 0, `${result.stderr}\n${result.stdout}`);
+    assert.match(result.stdout, /function/);
+  } finally {
+    await fs.rm(tempDataDir, { recursive: true, force: true });
+  }
+});
+
 test("production startup rejects DATA_DIR inside repository", async () => {
   const repoDataDir = path.join(path.resolve("."), "runtime-inside-repo");
   const result = spawnSync(
